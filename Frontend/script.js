@@ -101,38 +101,35 @@ function displayRequestDetails(request) {
         <p><strong>Comentarios:</strong> ${request.comments || 'N/A'}</p>
     `;
 
-    // Restablece el selector de usuario y el comentario cada vez que se muestran los detalles
+    // Reset the user selector and the comment each time the details are displayed.
     detailActingUserSelect.value = '';
     commentTextarea.value = '';
-    approvalActionsDiv.style.display = 'none'; // Oculta las acciones por defecto
+    approvalActionsDiv.style.display = 'none'; // Hide default actions
 
-    // listener for approve/reject button if pending (este es el original)
-    // Su visibilidad y habilitación se controlará por updateApprovalActionsUI().
+    // listener for approve/reject button if pending.
     
-    // Llama a la función que actualiza la UI de aprobación al cargar los detalles
     updateApprovalActionsUI(request);
 }
 
-// INICIO DE LA LÓGICA DE VISIBILIDAD DE BOTONES PARA APROBACIÓN
-// Nueva función para actualizar la visibilidad de los botones de aprobación/rechazo
+// Function to update the visibility of the approve/reject buttons.
 function updateApprovalActionsUI(request) {
     const selectedUser = detailActingUserSelect.value;
-    // Asumimos que los aprobadores simulados contienen '_aprobador' en su nombre
+    // Simulated approvers have '_aprobador' in their name.
     const isApproverRole = selectedUser.includes('_aprobador'); 
     
-    // Solo mostrar las acciones si la solicitud está pendiente,
-    // si el usuario seleccionado es un aprobador Y es el aprobador asignado a esta solicitud
+    // Will only show actions if status is Pending
+    // If the selected user is an approver and is the approver assigned to this request.
     if (request.status === 'pending' && isApproverRole && selectedUser === request.approver) {
         approvalActionsDiv.style.display = 'block';
     } else {
         approvalActionsDiv.style.display = 'none';
     }
 }
-// FIN DE LA LÓGICA DE VISIBILIDAD DE BOTONES PARA APROBACIÓN
 
-// Update request function (Aprobar/Rechazar)
+
+// (Aprobar/Rechazar)
 async function updateRequestStatus(id, status, comments) {
-    const actingUser = detailActingUserSelect.value; // Obtener el usuario seleccionado para la acción
+    const actingUser = detailActingUserSelect.value; // get the user designed for the action
 
     if (!actingUser) {
         alert('Por favor, selecciona tu usuario en el campo "Actuar como:" para realizar esta acción.');
@@ -145,7 +142,7 @@ async function updateRequestStatus(id, status, comments) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ status, comment: comments, acting_user: actingUser }), // Se envía el usuario que está actuando
+            body: JSON.stringify({ status, comment: comments, acting_user: actingUser }),
         });
 
         if (!response.ok) {
