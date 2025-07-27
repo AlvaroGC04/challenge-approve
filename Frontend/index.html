@@ -22,10 +22,20 @@
                 <textarea id="description" required></textarea><br>
 
                 <label for="requester">Solicitante:</label>
-                <input type="text" id="requester" value="usuario_red_1" required><br>
+                <select id="requester" required>
+                    <option value="">Selecciona un solicitante</option>
+                    <option value="alvaro_solicitante">Álvaro (Solicitante)</option>
+                    <option value="maria_solicitante">María (Solicitante)</option>
+                    <option value="juan_solicitante">Juan (Solicitante)</option>
+                </select><br>
 
                 <label for="approver">Aprobador:</label>
-                <input type="text" id="approver" value="usuario_aprobador_1" required><br>
+                <select id="approver" required>
+                    <option value="">Selecciona un aprobador</option>
+                    <option value="pedro_aprobador">Pedro (Aprobador)</option>
+                    <option value="laura_aprobador">Laura (Aprobador)</option>
+                    <option value="carlos_aprobador">Carlos (Aprobador)</option>
+                </select><br>
 
                 <label for="request_type">Tipo de Solicitud:</label>
                 <select id="request_type" required>
@@ -52,12 +62,29 @@
             <h2>Detalles de Solicitud</h2>
             <div id="detail-content">
                 </div>
+
+            <hr> <h3>Acción de Aprobación</h3>
+            <label for="detail-acting-user">Actuar como:</label>
+            <select id="detail-acting-user">
+                <option value="">Selecciona tu usuario</option>
+                <option value="alvaro_solicitante">Álvaro (Solicitante)</option>
+                <option value="pedro_aprobador">Pedro (Aprobador)</option>
+                <option value="laura_aprobador">Laura (Aprobador)</option>
+                <option value="carlos_aprobador">Carlos (Aprobador)</option>
+                </select><br>
+
+            <div id="approval-actions" style="display: none;">
+                <label for="comment-text">Comentario:</label>
+                <textarea id="comment-text" rows="2"></textarea><br>
+                <button id="approve-button" class="btn-primary">Aprobar</button>
+                <button id="reject-button" class="btn-primary btn-danger">Rechazar</button>
+            </div>
             <button id="back-to-list" class="btn-primary">Volver al Listado</button>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2025 Sistema de Aprobaciones</p>
+        <p>&copy; 2025 Sistema de Aprobaciones </p>
     </footer>
 
     <script src="script.js"></script> 
