@@ -1,0 +1,35 @@
+/* button.css */
+.btn-primary { /* Generic class button */
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger { /* reject button style */
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.request-item button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}

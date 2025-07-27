@@ -1,0 +1,6 @@
+/* request-list.css */
+#requests-container p { /* Message style for messages like: "Cargando solicitudes..." or "No hay solicitudes" */
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}

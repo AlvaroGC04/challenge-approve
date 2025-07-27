@@ -1,0 +1,22 @@
+/* request-item.css */
+.request-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.request-item h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #007bff;
+}
+
+.request-item p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}

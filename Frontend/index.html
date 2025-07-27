@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flujo de Aprobaciones</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <header>
+        <h1>Sistema de Aprobaciones Genericas</h1>
+    </header>
+
+    <main>
+        <section id="create-request">
+            <h2>Crear Nueva Solicitud</h2>
+            <form id="request-form">
+                <label for="title">Título:</label>
+                <input type="text" id="title" required><br>
+
+                <label for="description">Descripción:</label>
+                <textarea id="description" required></textarea><br>
+
+                <label for="requester">Solicitante:</label>
+                <input type="text" id="requester" value="usuario_red_1" required><br>
+
+                <label for="approver">Aprobador:</label>
+                <input type="text" id="approver" value="usuario_aprobador_1" required><br>
+
+                <label for="request_type">Tipo de Solicitud:</label>
+                <select id="request_type" required>
+                    <option value="">Seleccione...</option>
+                    <option value="despliegue">Despliegue</option>
+                    <option value="acceso">Acceso</option>
+                    <option value="cambio_tecnico">Cambio Técnico</option>
+                    <option value="incorporacion">Incorporación</option>
+                </select><br>
+
+                <button type="submit" class="btn-primary">Enviar Solicitud</button>
+            </form>
+            <p id="form-message"></p>
+        </section>
+
+        <section id="request-list">
+            <h2>Solicitudes Pendientes</h2>
+            <div id="requests-container">
+                <p>Cargando solicitudes...</p>
+            </div>
+        </section>
+
+        <section id="request-detail" style="display: none;">
+            <h2>Detalles de Solicitud</h2>
+            <div id="detail-content">
+                </div>
+            <button id="back-to-list" class="btn-primary">Volver al Listado</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Sistema de Aprobaciones</p>
+    </footer>
+
+    <script src="script.js"></script> 
+</body>
+</html>

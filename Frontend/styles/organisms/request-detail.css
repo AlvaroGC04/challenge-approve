@@ -1,0 +1,13 @@
+/* request-detail.css */
+#detail-content p {
+    margin-bottom: 10px;
+}
+
+#detail-content strong {
+    color: #555;
+}
+
+#approver-comments { /* Text style for approver text area */
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
