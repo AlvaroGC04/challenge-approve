@@ -112,3 +112,5 @@ app.patch('/requests/:id', (req,res) =>{ // CAMBIO 1: AGREGAR LA 'S'
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
+//for testing pourposes.
+module.exports = app;
