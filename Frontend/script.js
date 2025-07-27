@@ -10,14 +10,14 @@ const backToListBtn = document.getElementById('back-to-list');
 const requestListSection = document.getElementById('request-list');
 const createRequestSection = document.getElementById('create-request');
 
-// Referencias a los nuevos elementos del DOM para la lógica de autorización
+// References to the new DOM elements for the authorization logic.
 const detailActingUserSelect = document.getElementById('detail-acting-user');
 const approvalActionsDiv = document.getElementById('approval-actions');
 const commentTextarea = document.getElementById('comment-text');
 const approveButton = document.getElementById('approve-button');
 const rejectButton = document.getElementById('reject-button');
 
-let currentRequestDetails = null; // Almacena los detalles de la solicitud actual
+let currentRequestDetails = null; // Stores the details of the current request.
 
 // fetch and show requests
 async function fetchRequests() {
@@ -73,12 +73,12 @@ async function fetchRequestById(id) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const request = await response.json();
-        currentRequestDetails = request; // Almacena los detalles para la lógica de autorización
+        currentRequestDetails = request; // Stores the details for the authorization logic.
         displayRequestDetails(request);
     } catch (error) {
         console.error(`Error al obtener detalles de la solicitud ${id}:`, error);
         detailContent.innerHTML = '<p style="color: red;">Error al cargar los detalles de la solicitud.</p>';
-        approvalActionsDiv.style.display = 'none'; // Ocultar acciones si hay error
+        approvalActionsDiv.style.display = 'none'; // Hide actions if gets an error
     }
 }
 
@@ -127,7 +127,7 @@ function updateApprovalActionsUI(request) {
 }
 
 
-// (Aprobar/Rechazar)
+// (Approve/Reject)
 async function updateRequestStatus(id, status, comments) {
     const actingUser = detailActingUserSelect.value; // get the user designed for the action
 
@@ -211,27 +211,26 @@ backToListBtn.addEventListener('click', () => {
     fetchRequests(); //Refresh page
 });
 
-// NUEVOS LISTENERS (para la lógica de aprobación por rol en detalles)
-// Listener para el cambio en el selector de usuario en la vista de detalles
+
 detailActingUserSelect.addEventListener('change', () => {
-    if (currentRequestDetails) { // Si hay detalles de una solicitud cargados
+    if (currentRequestDetails) {
         updateApprovalActionsUI(currentRequestDetails);
     }
 });
 
-// Listener para el botón de Aprobar
+// Approval button listener
 approveButton.addEventListener('click', () => {
     if (currentRequestDetails) {
         updateRequestStatus(currentRequestDetails.id, 'approved', commentTextarea.value);
     }
 });
 
-// Listener para el botón de Rechazar
+// Rejectcion button listener
 rejectButton.addEventListener('click', () => {
     if (currentRequestDetails) {
         updateRequestStatus(currentRequestDetails.id, 'rejected', commentTextarea.value);
     }
 });
 
-// Cargar las solicitudes al iniciar la página
+// Load all request upon refreshing
 document.addEventListener('DOMContentLoaded', fetchRequests);
