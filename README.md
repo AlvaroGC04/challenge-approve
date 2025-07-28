@@ -12,7 +12,9 @@
 * **Base de Datos:**
     * SQLite3 (Base de datos relacional ligera y basada en archivo)
 
-Inicializacion en local:
-Iniciar BackEnd desde /Backend: node server.js
+**Inicializacion en local (instalar dependencias):**
+* Iniciar BackEnd desde /Backend: node server.js
+* Iniciar FrontEnd desde /Frontend: http-server
 
-Iniciar FrontEnd desde /Frontend: http-server
+**Inicializar por Docker:**
+* command: docker-compose up

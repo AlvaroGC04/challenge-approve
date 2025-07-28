@@ -16,44 +16,54 @@ const approvalActionsDiv = document.getElementById('approval-actions');
 const commentTextarea = document.getElementById('comment-text');
 const approveButton = document.getElementById('approve-button');
 const rejectButton = document.getElementById('reject-button');
+const pendingCountSpan = document.getElementById('pending-count');
 
 let currentRequestDetails = null; // Stores the details of the current request.
 
 // fetch and show requests
 async function fetchRequests() {
     requestsContainer.innerHTML = '<p>Cargando solicitudes...</p>'; // loading message
+    pendingCountSpan.textContent = '0'; 
+
     try {
         const response = await fetch(`${API_BASE_URL}/requests`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const requests = await response.json();
-        
+
+        // Pending counter
+        const pendingRequests = requests.filter(request => request.status.toLowerCase() === 'pending');
+        pendingCountSpan.textContent = pendingRequests.length; //updated the span with the number of pending requests
+
         displayRequests(requests);
     } catch (error) {
         console.error('Error al obtener las solicitudes:', error);
         requestsContainer.innerHTML = '<p style="color: red;">Error al cargar las solicitudes. Intente de nuevo más tarde.</p>';
+        pendingCountSpan.textContent = '0';
     }
 }
 
 // Show container requests
 function displayRequests(requests) {
-    if (requests.length === 0) {
-        requestsContainer.innerHTML = '<p>No hay solicitudes pendientes.</p>';
+    const requestsToDisplay = requests; // request filtered by fetchRequest
+
+    if (requestsToDisplay.length === 0) {
+        requestsContainer.innerHTML = '<p>No hay solicitudes disponibles.</p>';
         return;
     }
 
     requestsContainer.innerHTML = ''; //container cls
 
-    requests.forEach(request => {
+    requestsToDisplay.forEach(request => {
         const requestItem = document.createElement('div');
         requestItem.classList.add('request-item');
+        requestItem.classList.add(`status-${request.status.toLowerCase()}`); 
         requestItem.innerHTML = `
             <div>
                 <h3>${request.title}</h3>
                 <p>Solicitante: ${request.requester}</p>
-                <p>Estado: <strong>${request.status.toUpperCase()}</strong></p>
-            </div>
+                <p>Estado: <strong class="status-text">${request.status.toUpperCase()}</strong></p> </div>
             <button data-id="${request.id}" class="btn-primary">Ver Detalles</button>
         `;
         requestsContainer.appendChild(requestItem);
@@ -95,7 +105,7 @@ function displayRequestDetails(request) {
         <p><strong>Solicitante:</strong> ${request.requester}</p>
         <p><strong>Aprobador:</strong> ${request.approver}</p>
         <p><strong>Tipo de Solicitud:</strong> ${request.request_type}</p>
-        <p><strong>Estado:</strong> <strong style="color: ${request.status === 'approved' ? 'green' : request.status === 'rejected' ? 'red' : 'orange'};">${request.status.toUpperCase()}</strong></p>
+        <p><strong>Estado:</strong> <strong style="color: ${request.status.toLowerCase() === 'approved' ? 'green' : request.status.toLowerCase() === 'rejected' ? 'red' : 'orange'};">${request.status.toUpperCase()}</strong></p>
         <p><strong>Creada el:</strong> ${new Date(request.created_at).toLocaleString()}</p>
         <p><strong>Última Actualización:</strong> ${new Date(request.updated_at).toLocaleString()}</p>
         <p><strong>Comentarios:</strong> ${request.comments || 'N/A'}</p>
@@ -119,7 +129,7 @@ function updateApprovalActionsUI(request) {
     
     // Will only show actions if status is Pending
     // If the selected user is an approver and is the approver assigned to this request.
-    if (request.status === 'pending' && isApproverRole && selectedUser === request.approver) {
+    if (request.status.toLowerCase() === 'pending' && isApproverRole && selectedUser === request.approver) {
         approvalActionsDiv.style.display = 'block';
     } else {
         approvalActionsDiv.style.display = 'none';
@@ -152,7 +162,7 @@ async function updateRequestStatus(id, status, comments) {
 
         const result = await response.json();
         alert(result.message);
-        fetchRequests(); // reload requests
+        await fetchRequests(); // reload requests
         showRequestList(); // back to the list
     } catch (error) {
         console.error(`Error al actualizar la solicitud ${id}:`, error);
@@ -189,7 +199,7 @@ requestForm.addEventListener('submit', async (event) => {
         formMessage.textContent = '¡Solicitud creada exitosamente!';
         formMessage.style.color = 'green';
         requestForm.reset();
-        fetchRequests();
+        await fetchRequests(); // reload the counter
     } catch (error) {
         console.error('Error al crear la solicitud:', error);
         formMessage.textContent = `Error al crear la solicitud: ${error.message}`;
@@ -208,7 +218,7 @@ function showRequestList() {
 
 backToListBtn.addEventListener('click', () => {
     showRequestList();
-    fetchRequests(); //Refresh page
+    fetchRequests(); //Refresh page (y actualiza el contador)
 });
 
 

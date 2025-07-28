@@ -20,3 +20,36 @@
     margin: 5px 0;
     font-size: 0.9rem;
 }
+
+/* **Nuevos estilos para el color de estado y borde** */
+
+/* Estilos para el texto del estado dentro de request-item */
+.request-item .status-text {
+    font-weight: bold; /* Asegura que el texto sea negrita */
+}
+
+/* Colores del texto para cada estado */
+.request-item.status-pending .status-text {
+    color: orange;
+}
+
+.request-item.status-approved .status-text {
+    color: green;
+}
+
+.request-item.status-rejected .status-text {
+    color: red;
+}
+
+/* Opcional: Borde izquierdo para las tarjetas de solicitud según el estado */
+.request-item.status-pending {
+    border-left: 5px solid orange;
+}
+
+.request-item.status-approved {
+    border-left: 5px solid green;
+}
+
+.request-item.status-rejected {
+    border-left: 5px solid red;
+}
