@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 
 app.use(express.json());
-//to avoid fetching errors due to http-server.
+//to avoid fetching errors due to http-server local test.
 app.use(cors({
     origin: ['http://localhost:8080', 'http://127.0.0.1:8080'],
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
@@ -73,7 +73,7 @@ app.get('/requests/:id', (req, res) => {
     });
 });
 
-app.patch('/requests/:id', (req,res) =>{ // CAMBIO 1: AGREGAR LA 'S'
+app.patch('/requests/:id', (req,res) =>{
     const { id } = req.params;
     const { status, comment, acting_user } = req.body;
     console.log('Status recibido: ', status); //debugging
